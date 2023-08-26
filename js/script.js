@@ -286,11 +286,12 @@ const calculateAdd = () => {
     return { fillInForm, resetForm };
 };
 
-const createCartItem = (item) => {
+const createCartItem = (item, data) => {
+    const img = data.find((cocktail) => cocktail.title === item.title)?.image;
     const li = document.createElement("li");
     li.classList.add("order__item");
     li.innerHTML = `
-    <img class="order__img" src="img/make_your_own.jpg" alt="${item.title}" />
+    <img class="order__img" src="${img ? `${API_URL}${img}` : "../img/make_your_own.jpg"}" alt="${item.title}" />
 
     <div class="order__info">
         <h3 class="order__name">${item.title}</h3>
@@ -301,7 +302,10 @@ const createCartItem = (item) => {
             ${
                 item.topping
                     ? Array.isArray(item.topping)
-                        ? item.topping.map((topping) => `<li class="order_topping-item">${topping}</li>`)
+                        ? item.topping
+                              .map((topping) => `<li class="order_topping-item">${topping}</li>`)
+                              .toString()
+                              .replace(",", "")
                         : `<li class="order_topping-item">${item.topping}</li>`
                     : ""
             }
@@ -316,7 +320,7 @@ const createCartItem = (item) => {
     return li;
 };
 
-const renderCart = () => {
+const renderCart = (data) => {
     const modalOrder = document.querySelector(".modal_order");
 
     const orderCount = modalOrder.querySelector(".order__count");
@@ -330,7 +334,7 @@ const renderCart = () => {
     orderCount.textContent = `(${orderListData.length})`;
 
     orderListData.forEach((item) => {
-        orderList.append(createCartItem(item));
+        orderList.append(createCartItem(item, data));
     });
 
     orderTotalPrice.textContent = `${orderListData.reduce((acc, item) => acc + +item.price, 0)} ₽`;
@@ -366,11 +370,20 @@ const renderCart = () => {
     });
 };
 
+const renderCountCart = (count) => {
+    const headerBtnOrder = document.querySelector(".header__btn-order");
+    headerBtnOrder.dataset.count = count || cartDataControl.get().length;
+};
+
+renderCountCart();
+
 const init = async () => {
+    const data = await getData();
+
     modalController({
         modal: ".modal_order",
         btnOpen: ".header__btn-order",
-        open: renderCart,
+        open: renderCart(data),
     });
 
     const { resetForm: resetFormMakeYourOwn } = calculateMakeYourOwn();
@@ -382,7 +395,6 @@ const init = async () => {
     });
 
     const goodsListElem = document.querySelector(".goods__list");
-    const data = await getData();
 
     const cartsCocktail = data.map((item) => {
         const li = document.createElement("li");
