@@ -1057,6 +1057,96 @@ fieldset {
     .footer__developer {
         justify-self: start;
     }
+
+    .modal {
+        padding: 20px 0;
+    }
+
+    .modal__main_make,
+    .modal__main_order {
+        max-width: 320px;
+    }
+
+    .make,
+    .order {
+        padding: 24px 15px;
+    }
+
+    .make__title,
+    .order__title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .make__fieldset_ingredients {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px 15px;
+        margin-bottom: 24px;
+    }
+
+    .make__wrap-add {
+        margin-bottom: 24px;
+        flex-direction: column;
+        gap: 28px;
+    }
+
+    .make__fieldset_topping {
+        width: auto;
+        gap: 12px;
+    }
+
+    .make__legend {
+        margin-bottom: 12px;
+    }
+
+    .make__upsale {
+        font-size: 10px;
+    }
+
+    .make__fieldset_cup {
+        gap: 12px;
+    }
+
+    .make__footer {
+        gap: 16px;
+    }
+
+    .make__add-btn {
+        min-width: auto;
+    }
+
+    .order__list,
+    .order__price {
+        margin-bottom: 20px;
+    }
+
+    .order__item {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        gap: 8px;
+    }
+
+    .order__name {
+        margin-bottom: 4px;
+    }
+
+    .order__topping-item {
+        margin-bottom: 4px;
+        font-size: 10px;
+    }
+
+    .order__form {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .order__label {
+        margin-bottom: 8px;
+    }
+
+    .order__submit {
+        grid-column: auto;
+    }
 }
 
 @keyframes flying01 {
