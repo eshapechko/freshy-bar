@@ -10,7 +10,7 @@ export const scrollService = {
         left: 0;
         height: 100vh;
         width: 100vw;
-        padding-right: ${window.innerWidth - document.body.offsetWidth}px
+        padding-right: ${window.innerWidth - document.body.offsetWidth}px;
       `;
     },
     enabledScroll() {

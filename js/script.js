@@ -16,6 +16,14 @@ const init = async () => {
         },
     });
 
+    modalController({
+        modal: ".modal_order-empty",
+    });
+
+    modalController({
+        modal: ".modal_order-success",
+    });
+
     const { resetForm: resetFormMakeYourOwn } = calculateMakeYourOwn();
 
     modalController({

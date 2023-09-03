@@ -1,7 +1,9 @@
-import { sentData } from "./apiService.js";
+import { sendData } from "./apiService.js";
 import { API_URL } from "./config.js";
 import { getFormData } from "./getFormData.js";
 const modalOrder = document.querySelector(".modal_order");
+const modalEmpty = document.querySelector(".modal_order-empty");
+const modalSuccess = document.querySelector(".modal_order-success");
 const orderCount = modalOrder.querySelector(".order__count");
 const orderList = modalOrder.querySelector(".order__list");
 const orderTotalPrice = modalOrder.querySelector(".order__total-price");
@@ -95,23 +97,34 @@ const handlerSubmit = async (e) => {
 
     e.preventDefault();
     if (!orderListData.length) {
-        console.log("Корзина пустая");
+        console.log("Корзина пустая"); //добавить сообщение-модалку
         orderForm.reset();
         modalOrder.closeModal("close");
+
+        setTimeout(() => {
+            modalEmpty.openModal();
+        }, 600);
+
         return;
     }
 
     const data = getFormData(orderForm);
-    const response = await sentData({
+    const response = await sendData({
         ...data,
         products: orderListData,
     });
 
     const { message } = await response.json();
-    alert(message);
+
     cartDataControl.clear();
     orderForm.reset();
     modalOrder.closeModal("close");
+
+    setTimeout(() => {
+        if (message) {
+            modalSuccess.openModal();
+        }
+    }, 600);
 };
 
 export const renderCart = (data) => {
